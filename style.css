@@ -717,6 +717,7 @@ form button {
 }
 .modal__dialog {
 	max-width: 500px;
+	height: 290px;
 	margin: 40px auto;
 }
 .modal__content {

@@ -97,4 +97,47 @@ window.addEventListener('DOMContentLoaded', () => {
 
   setClock('.timer', deadline)
   // TIMER end
+
+  // Modal ===============-----------------=============== start
+  const elsModalOpenBtns = document.querySelectorAll('[data-modal]'),
+    elModalContent = document.querySelector('.modal__content')
+    elModal = document.querySelector('.modal'),
+    elModalCloseBtn = document.querySelector('[data-modal-close]')
+
+  function openModal() {
+    elModal.classList.add('show')
+    elModal.classList.remove('hide')
+    elModalContent.classList.add('modalFade')
+    document.body.style.overflow = 'hidden'
+    clearInterval(modalTimerId)
+  }
+
+  function closeModal() {
+    elModal.classList.add('hide')
+    elModal.classList.remove('show')
+    document.body.style.overflow = ''
+  }
+
+  elsModalOpenBtns.forEach(btn => {
+    btn.addEventListener('click', openModal)
+  })
+  if(elModalCloseBtn) {
+    elModalCloseBtn.addEventListener('click', closeModal)
+  }
+
+  elModal.addEventListener('click', (evt) => {
+    if(evt.target.classList.contains('modal')) {
+      closeModal()
+    }
+  })
+
+  document.addEventListener('keydown', (evt) => {
+    if(evt.code === 'Escape' && elModal.classList.contains('show')) {
+      closeModal()
+    }
+  })
+
+  const modalTimerId = setTimeout(openModal, 5000)
+
+  // Modal ================------------================= end
 })
