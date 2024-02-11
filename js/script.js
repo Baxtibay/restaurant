@@ -137,7 +137,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-  const modalTimerId = setTimeout(openModal, 50000)
+  // const modalTimerId = setTimeout(openModal, 50000)
 
   // Modal  end
 
@@ -219,148 +219,39 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const offers = [
-    {
-      src: './img/offer1.png',
-      alt: 'Quattro Pasta',
-      title: 'Quattro Pasta',
-      descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
-      discount: 55,
-      sale: 40
-    },
-    {
-      src: './img/offer2.png',
-      alt: 'Vegertarian Pasta',
-      title: 'Vegertarian Pasta',
-      descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
-      discount: 55,
-      sale: 18
-    },
-    {
-      src: './img/offer3.png',
-      alt: 'Gluten-Free Pasta',
-      title: 'Gluten-Free Pasta',
-      descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
-      discount: 60,
-      sale: 55
-    },
-  ]
-
-  offers.forEach(offer => {
-    const {src, alt, title, descr, discount, sale} = offer
-    new OfferMenu(src,alt,title,descr,discount,sale,".offers-items").render()
-  })
+  fetch('http://localhost:3000/offers', {
+    method: 'GET',
+    headers:{'Content-Type': 'application/json'}
+  }).then(response => response.json())
+    .then(data => {
+      data.forEach(offer => {
+        const {src, alt, title, descr, discount, sale} = offer
+        new OfferMenu(src,alt,title,descr,discount,sale,".offers-items").render()
+      })
+    })
 
   // Class Offer END
-  // Class Menu Start
-  class menu {
-    constructor(src, foodName, price, descr, parentElement) {
-      this.src = src,
-      this.foodName = foodName,
-      this.price = price,
-      this.descr = descr,
-      this.parent =  document.querySelector(parentElement)
-    }
-    render() {
-      const menuItem = document.createElement('div')
-      menuItem.classList.add('menu-item')
-      menuItem.innerHTML = `
-        <img src=${this.src} alt=${this.src}>
-        <div>
-          <h3>${this.foodName}<span class="primary-text">$${this.price}</span></h3>
-          <p>${this.descr}</p>
-        </div>
-      `
-      this.parent.append(menuItem)
-    }
-  }
 
-  const menusLeft = [
-    {
-      src: './img/food1.png',
-      foodName: 'LASAL CHEESE',
-      price: 18.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food2.png',
-      foodName: 'JUMBO CRAB SHRIMP',
-      price: 24.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food3.png',
-      foodName: 'KOKTAIL JUCIE',
-      price: 12.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food4.png',
-      foodName: 'CAPO STEAK',
-      price: 60.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food5.png',
-      foodName: 'ORGANIC FRUIT SALAD',
-      price: 8.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food6.png',
-      foodName: 'CHEESE PIZZA',
-      price: 18.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-  ]
-
-  const menusRight = [
-    {
-      src: './img/food7.jpeg',
-      foodName: 'KOFTA MEAT',
-      price: 40.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food8.jpeg',
-      foodName: 'JUMBO CRAB SHRIMP',
-      price: 14.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food9.jpeg',
-      foodName: 'CHEESE TOST',
-      price: 6.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food10.jpeg',
-      foodName: 'FRUIT SALAD',
-      price: 14.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food11.jpeg',
-      foodName: 'CHICKEN SHAWARMA',
-      price: 20.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-    {
-      src: './img/food12.jpeg',
-      foodName: 'MEGA CHEESE PIZZA',
-      price: 30.00,
-      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
-    },
-  ]
-
-  menusLeft.forEach(menuLeft => {
-    const {src, foodName, price, descr} = menuLeft
-    new menu(src, foodName, price, descr,'.menu-items-left').render()
-  })
-
-  menusRight.forEach(menuRight => {
-    const {src, foodName, price, descr} = menuRight
-    new menu(src, foodName, price, descr,'.menu-items-right').render()
-  })
-  // Class Menu End
+  // Get menu's data from API START
+  fetch('http://localhost:3000/menu', {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'}
+  }).then(res => res.json())
+    .then(data => {
+      data.forEach(menu => {
+        // console.log(menu);
+        const menuList = document.querySelector('.menu-items')
+        const menuItem = document.createElement('div')
+        menuItem.classList.add('menu-item')
+        menuItem.innerHTML = `
+          <img src=${menu.src} alt=${menu.foodName}>
+          <div>
+            <h3>${menu.foodName}<span class="primary-text">$${menu.price}</span></h3>
+            <p>${menu.descr}</p>
+          </div>
+        `
+        menuList.append(menuItem)
+      })
+    })
+  // Get menu's data from API END
 })
