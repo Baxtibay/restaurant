@@ -98,7 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setClock('.timer', deadline)
   // TIMER end
 
-  // Modal ===============-----------------=============== start
+  // Modal  start
   const elsModalOpenBtns = document.querySelectorAll('[data-modal]'),
     elModalContent = document.querySelector('.modal__content')
     elModal = document.querySelector('.modal'),
@@ -137,11 +137,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-  const modalTimerId = setTimeout(openModal, 5000)
+  const modalTimerId = setTimeout(openModal, 50000)
 
-  // Modal ================------------================= end
+  // Modal  end
 
-  // Form ================-------------================= start
+  // Form  start
   const form = document.querySelector('form'),
     telegramTokenBot = '6961519744:AAELRkGxSms-H0mvOqkXRjuSxN9i5f0_lW8',
     chatId = '364298077'
@@ -184,5 +184,183 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 2000)
       })
   })
-  // Form ================-------------================= END
+  // Form  END
+
+  // Class Offer  start
+
+  class OfferMenu {
+    constructor(src, alt, title, descr, discount, sale, parentSelector) {
+      this.src = src,
+      this.alt = alt,
+      this.title = title,
+      this.descr = descr,
+      this.discount = discount,
+      this.sale = sale,
+      this.parent = document.querySelector(parentSelector)
+      this.formatToUSD()
+    }
+
+    formatToUSD() {
+      this.discount = this.discount.toLocaleString("en-US", {style:"currency", currency:"USD"})
+      this.sale = this.sale.toLocaleString("en-US", {style:"currency", currency:"USD"})
+    }
+
+    render() {
+      const element = document.createElement('div')
+      element.innerHTML = `
+        <img src=${this.src} alt=${this.alt}>
+        <div>
+          <h3>${this.title}</h3>
+          <p>${this.descr}</p>
+          <p><del>${this.discount}</del> <span class="primary-text">${this.sale}</span></p>
+        </div>
+      `
+      this.parent.append(element)
+    }
+  }
+
+  const offers = [
+    {
+      src: './img/offer1.png',
+      alt: 'Quattro Pasta',
+      title: 'Quattro Pasta',
+      descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+      discount: 55,
+      sale: 40
+    },
+    {
+      src: './img/offer2.png',
+      alt: 'Vegertarian Pasta',
+      title: 'Vegertarian Pasta',
+      descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+      discount: 55,
+      sale: 18
+    },
+    {
+      src: './img/offer3.png',
+      alt: 'Gluten-Free Pasta',
+      title: 'Gluten-Free Pasta',
+      descr: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
+      discount: 60,
+      sale: 55
+    },
+  ]
+
+  offers.forEach(offer => {
+    const {src, alt, title, descr, discount, sale} = offer
+    new OfferMenu(src,alt,title,descr,discount,sale,".offers-items").render()
+  })
+
+  // Class Offer END
+  // Class Menu Start
+  class menu {
+    constructor(src, foodName, price, descr, parentElement) {
+      this.src = src,
+      this.foodName = foodName,
+      this.price = price,
+      this.descr = descr,
+      this.parent =  document.querySelector(parentElement)
+    }
+    render() {
+      const menuItem = document.createElement('div')
+      menuItem.classList.add('menu-item')
+      menuItem.innerHTML = `
+        <img src=${this.src} alt=${this.src}>
+        <div>
+          <h3>${this.foodName}<span class="primary-text">$${this.price}</span></h3>
+          <p>${this.descr}</p>
+        </div>
+      `
+      this.parent.append(menuItem)
+    }
+  }
+
+  const menusLeft = [
+    {
+      src: './img/food1.png',
+      foodName: 'LASAL CHEESE',
+      price: 18.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food2.png',
+      foodName: 'JUMBO CRAB SHRIMP',
+      price: 24.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food3.png',
+      foodName: 'KOKTAIL JUCIE',
+      price: 12.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food4.png',
+      foodName: 'CAPO STEAK',
+      price: 60.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food5.png',
+      foodName: 'ORGANIC FRUIT SALAD',
+      price: 8.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food6.png',
+      foodName: 'CHEESE PIZZA',
+      price: 18.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+  ]
+
+  const menusRight = [
+    {
+      src: './img/food7.jpeg',
+      foodName: 'KOFTA MEAT',
+      price: 40.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food8.jpeg',
+      foodName: 'JUMBO CRAB SHRIMP',
+      price: 14.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food9.jpeg',
+      foodName: 'CHEESE TOST',
+      price: 6.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food10.jpeg',
+      foodName: 'FRUIT SALAD',
+      price: 14.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food11.jpeg',
+      foodName: 'CHICKEN SHAWARMA',
+      price: 20.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+    {
+      src: './img/food12.jpeg',
+      foodName: 'MEGA CHEESE PIZZA',
+      price: 30.00,
+      descr: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At, explicabo.'
+    },
+  ]
+
+  menusLeft.forEach(menuLeft => {
+    const {src, foodName, price, descr} = menuLeft
+    new menu(src, foodName, price, descr,'.menu-items-left').render()
+  })
+
+  menusRight.forEach(menuRight => {
+    const {src, foodName, price, descr} = menuRight
+    new menu(src, foodName, price, descr,'.menu-items-right').render()
+  })
+  // Class Menu End
 })
