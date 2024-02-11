@@ -280,7 +280,8 @@ header * {
 }
 
 #menu .menu-items {
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(2, 470px);
 	justify-content: center;
 	align-items: center;
 }
