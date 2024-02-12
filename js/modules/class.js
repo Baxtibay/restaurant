@@ -1,3 +1,5 @@
+import getResources from "../services/get-resources"
+
 function classCard(selector) {
   class OfferMenu {
     constructor(src, alt, title, descr, discount, sale, parentSelector) {
@@ -30,16 +32,12 @@ function classCard(selector) {
     }
   }
 
-  fetch('http://localhost:3000/offers', {
-    method: 'GET',
-    headers:{'Content-Type': 'application/json'}
-  }).then(response => response.json())
-    .then(data => {
-      data.forEach(offer => {
-        const {src, alt, title, descr, discount, sale} = offer
-        new OfferMenu(src,alt,title,descr,discount,sale,selector).render()
-      })
+  getResources().then(data => {
+    data.forEach(offer => {
+      const {src, alt, title, descr, discount, sale} = offer
+      new OfferMenu(src,alt,title,descr,discount,sale,selector).render()
     })
+  })
 
 }
 

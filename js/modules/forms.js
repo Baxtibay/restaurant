@@ -22,25 +22,28 @@ function forms(formSelector) {
     formData.forEach((value, key) => {
       object[key] = value
     })
-
-    fetch(`https://api.telegram.org/bot${telegramTokenBot}/sendMessage`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: `
-          Name: ${object.name}, Phone: ${object.phone}
-        `
-      })
-    })
-      .then(() => (statusMessage.textContent = message.success))
-      .catch(() => statusMessage.failure)
-      .finally(() => {
-        setTimeout(() => {
-          statusMessage.remove()
-        }, 2000)
-      })
+    sendMessage()
   })
+
+  async function sendMessage() {
+    try {
+      const response = await fetch(`https://api.telegram.org/bot${telegramTokenBot}/sendMessage`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: ` Name: ${object.name}, Phone: ${object.phone}`
+        })
+      })
+      statusMessage.textContent = message.success
+    } catch {
+      statusMessage.failure
+    } finally {
+      setTimeout(() => {
+        statusMessage.remove()
+      }, 2000)
+    }
+  }
 }
 
 export default forms
